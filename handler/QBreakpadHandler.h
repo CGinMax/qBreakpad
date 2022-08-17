@@ -38,13 +38,16 @@ public:
     static QString version();
 
     QBreakpadHandler();
-    ~QBreakpadHandler();
+    ~QBreakpadHandler() override;
+
+    void registerBreakpad(const QString& dumpDirPath = QString());
 
     QString uploadUrl() const;
     QString dumpPath() const;
-    QStringList dumpFileList() const;
 
-    void setDumpPath(const QString& path);
+    void setPluginDirsPath(const QStringList& dirsPath);
+    void setStackHeapOutputFilePath(const QString& filePath);
+//    void setDumpPath(const QString& path);
     void setUploadUrl(const QUrl& url);
 
 public slots:

@@ -16,13 +16,23 @@ include($$PWD/../config.pri)
 
 ## google-breakpad
 include($$PWD/../third_party/breakpad.pri)
+DEFINES += USE_BREAKPAD
 
 HEADERS += \
     $$PWD/singletone/call_once.h \
     $$PWD/singletone/singleton.h \
     $$PWD/QBreakpadHandler.h \
-    $$PWD/QBreakpadHttpUploader.h
+    $$PWD/QBreakpadHttpUploader.h \
+    $$PWD/platformhelper.h
 
 SOURCES += \
     $$PWD/QBreakpadHandler.cpp \
-    $$PWD/QBreakpadHttpUploader.cpp
+    $$PWD/QBreakpadHttpUploader.cpp \
+    $$PWD/platformhelper.cpp
+
+
+unix:!mac {
+    SOURCES += $$PWD/platformhelper_linux.cpp
+} else:win32:!win32-g++ {
+    SOURCES += $$PWD/platformhelper_win_msvc.cpp
+}
